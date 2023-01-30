@@ -24,7 +24,7 @@ function App() {
 
     return (
         <div className="App">
-            <Todolist newShapka={shapka11} tasks={tasks1}/>
+            <Todolist shapka={shapka1} newShapka={shapka11} tasks={tasks1}/>
             <Todolist shapka={shapka2} tasks={tasks2}/>
         </div>
     );
