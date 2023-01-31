@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Todolist} from "./Todolist";
+import {TaskType, Todolist} from "./Todolist";
 
 function App() {
 
@@ -9,7 +9,7 @@ function App() {
     const shapka2 = 'What to learn-2'
     const shapka22 = 'What to learn-222'
 
-    const tasks1 = [
+    const tasks1: Array<TaskType> = [
         { id: 1, title: "HTML&CSS", isDone: true },
         { id: 2, title: "JS", isDone: true },
         { id: 3, title: "ReactJS", isDone: false }

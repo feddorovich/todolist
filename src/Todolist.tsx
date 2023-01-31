@@ -6,7 +6,7 @@ type PropsType = {
     tasks: Array<TaskType>
 }
 
-type TaskType = {
+export type TaskType = {
     id: number,
     title: string,
     isDone: boolean
