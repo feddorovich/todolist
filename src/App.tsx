@@ -12,7 +12,7 @@ function App():JSX.Element {
         { id: 3, title: "ReactJS", isDone: false },
         { id: 4, title: "Redux", isDone: false }
     ])
-    let [filter, setFilter] = useState<FilterValeusType>('all')
+/*    let [filter, setFilter] = useState<FilterValeusType>('all')
 
     function removeTask(id: number) {
        let filteredTask = tasks.filter( (el) => el.id !== id)
@@ -29,15 +29,14 @@ function App():JSX.Element {
     }
     if (filter === 'active') {
         tasksForTodolist = tasks.filter( (t) => t.isDone === false)
-    }
+    }*/
 
     return (
         <div className="App">
             <Todolist
                 title="What to learn"
-                tasks={tasksForTodolist}
-                removeTask={removeTask}
-                changeFilter={changeFilter}
+                tasks={tasks}
+                setTasks={setTasks}
             />
         </div>
     );
