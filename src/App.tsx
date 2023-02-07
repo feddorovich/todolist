@@ -2,41 +2,45 @@ import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 
-export type FilterValeusType = 'all' | 'completed' | 'active'
+export type FilterValuesType = 'all' | 'active' | 'completed'
 
-function App():JSX.Element {
+function App() {
 
     let [tasks, setTasks] = useState<Array<TaskType>>([
-        { id: 1, title: "HTML&CSS", isDone: true },
-        { id: 2, title: "JS", isDone: true },
-        { id: 3, title: "ReactJS", isDone: false },
-        { id: 4, title: "Redux", isDone: false }
+        {id: 1, title: "HTML&CSS", isDone: true},
+        {id: 2, title: "JS", isDone: true},
+        {id: 3, title: "ReactJS", isDone: false},
+        {id: 4, title: "Redux", isDone: false}
     ])
-/*    let [filter, setFilter] = useState<FilterValeusType>('all')
 
     function removeTask(id: number) {
-       let filteredTask = tasks.filter( (el) => el.id !== id)
+        let filteredTask = tasks.filter((el) => el.id !== id)
         setTasks(filteredTask)
+        console.log(filteredTask)
     }
 
-    function changeFilter(value: FilterValeusType) {
-        setFilter(value)
-    }
+    let [filter, SetFilter] = useState<FilterValuesType>('all')
 
-    let tasksForTodolist = tasks
+    let tasksForTodolisk = tasks
     if (filter === 'completed') {
-        tasksForTodolist = tasks.filter( (t) => t.isDone === true)
+        tasksForTodolisk = tasks.filter( (el) => el.isDone === true)
     }
     if (filter === 'active') {
-        tasksForTodolist = tasks.filter( (t) => t.isDone === false)
-    }*/
+        tasksForTodolisk = tasks.filter( (el) => el.isDone === false)
+    }
+
+    function changeFilter(value: FilterValuesType) {
+        SetFilter(value)
+        console.log(value)
+    }
 
     return (
         <div className="App">
             <Todolist
                 title="What to learn"
-                tasks={tasks}
-                setTasks={setTasks}
+                tasks={tasksForTodolisk}
+                removeTask={removeTask}
+                changeFilter={changeFilter}
             />
         </div>
     );
