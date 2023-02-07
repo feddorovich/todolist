@@ -13,7 +13,7 @@ function App() {
         {id: 4, title: "Redux", isDone: false}
     ])
 
-    function removeTask(id: number) {
+/*    function removeTask(id: number) {
         let filteredTask = tasks.filter((el) => el.id !== id)
         setTasks(filteredTask)
         console.log(filteredTask)
@@ -32,15 +32,14 @@ function App() {
     function changeFilter(value: FilterValuesType) {
         SetFilter(value)
         console.log(value)
-    }
+    }*/
 
     return (
         <div className="App">
             <Todolist
                 title="What to learn"
-                tasks={tasksForTodolisk}
-                removeTask={removeTask}
-                changeFilter={changeFilter}
+                tasks={tasks}
+                setTasks={setTasks}
             />
         </div>
     );
