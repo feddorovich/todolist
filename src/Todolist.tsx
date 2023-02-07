@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {FilterValuesType} from "./App";
+import React from 'react';
+import {FilteredValuesType} from "./App";
 
 export type TaskType = {
     id: number
@@ -10,32 +10,11 @@ export type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    setTasks: Function
+    removeTask: Function
+    changeFilter: (value: FilteredValuesType) => void
 }
 
 export function Todolist(props: PropsType) {
-
-    function removeTask(id: number) {
-        let filteredTask = props.tasks.filter((el) => el.id !== id)
-        props.setTasks(filteredTask)
-        console.log(filteredTask)
-    }
-
-    let [filter, SetFilter] = useState<FilterValuesType>('all')
-
-    let tasksForTodolisk = props.tasks
-    if (filter === 'completed') {
-        tasksForTodolisk = props.tasks.filter( (el) => el.isDone === true)
-    }
-    if (filter === 'active') {
-        tasksForTodolisk = props.tasks.filter( (el) => el.isDone === false)
-    }
-
-    function changeFilter(value: FilterValuesType) {
-        SetFilter(value)
-        console.log(value)
-    }
-
     return <div>
         <h3>{props.title}</h3>
         <div>
@@ -43,20 +22,20 @@ export function Todolist(props: PropsType) {
             <button>+</button>
         </div>
         <ul>
-            {tasksForTodolisk.map( (el) => {
+            {props.tasks.map((el) => {
                 return (
                     <li key={el.id}>
-                        <input type="checkbox" checked={el.isDone} onChange={()=> console.log('changed')}/>
+                        <input type="checkbox" checked={el.isDone} onChange={() => console.log('LOG')}/>
                         <span>{el.title}</span>
-                        <button onClick={()=> {removeTask(el.id)} }>X</button>
+                        <button onClick={ ()=> {props.removeTask(el.id)} }>X</button>
                     </li>
                 )
             })}
-         </ul>
+        </ul>
         <div>
-            <button onClick={ ()=>{changeFilter('all')} }>All</button>
-            <button onClick={ ()=>{changeFilter('active')} }>Active</button>
-            <button onClick={ ()=>{changeFilter('completed')} }>Completed</button>
+            <button onClick={()=> {props.changeFilter('all')} }>All</button>
+            <button onClick={()=> {props.changeFilter('active')} }>Active</button>
+            <button onClick={()=> {props.changeFilter('completed')} }>Completed</button>
         </div>
     </div>
 }
