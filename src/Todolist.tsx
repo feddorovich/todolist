@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FilteredValuesType} from "./App";
 
 export type TaskType = {
@@ -10,11 +10,32 @@ export type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: Function
-    changeFilter: (value: FilteredValuesType) => void
+    setTaks: Function
 }
 
 export function Todolist(props: PropsType) {
+
+    function removeTask(id: number) {
+        let filteredTask = props.tasks.filter( (el) => el.id !== id )
+        props.setTaks(filteredTask)
+        console.log(filteredTask)
+    }
+
+    let [filter, setFilter] = useState<FilteredValuesType>('all')
+
+    let tasksForTodoLisk = props.tasks
+    if(filter === 'active') {
+        tasksForTodoLisk = props.tasks.filter( (el) => el.isDone === false)
+    }
+    if(filter === 'completed') {
+        tasksForTodoLisk = props.tasks.filter( (el) => el.isDone === true)
+    }
+
+    function changeFilter(value: FilteredValuesType) {
+        setFilter(value)
+        console.log(value)
+    }
+
     return <div>
         <h3>{props.title}</h3>
         <div>
@@ -22,20 +43,20 @@ export function Todolist(props: PropsType) {
             <button>+</button>
         </div>
         <ul>
-            {props.tasks.map((el) => {
+            {tasksForTodoLisk.map((el) => {
                 return (
                     <li key={el.id}>
                         <input type="checkbox" checked={el.isDone} onChange={() => console.log('LOG')}/>
                         <span>{el.title}</span>
-                        <button onClick={ ()=> {props.removeTask(el.id)} }>X</button>
+                        <button onClick={ ()=> {removeTask(el.id)} }>X</button>
                     </li>
                 )
             })}
         </ul>
         <div>
-            <button onClick={()=> {props.changeFilter('all')} }>All</button>
-            <button onClick={()=> {props.changeFilter('active')} }>Active</button>
-            <button onClick={()=> {props.changeFilter('completed')} }>Completed</button>
+            <button onClick={()=> {changeFilter('all')} }>All</button>
+            <button onClick={()=> {changeFilter('active')} }>Active</button>
+            <button onClick={()=> {changeFilter('completed')} }>Completed</button>
         </div>
     </div>
 }
