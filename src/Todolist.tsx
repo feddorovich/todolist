@@ -10,7 +10,6 @@ export type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    setTasks: (value: Array<TaskType>) => void
     deleteAllTasks: () => void
     removeTask: (id: number) => void
 }
