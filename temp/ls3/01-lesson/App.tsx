@@ -16,11 +16,11 @@ function App() {
     ]);
 
     function removeTask(id: string) {
-        let filteredTasks = tasks.filter(t => t.id != id);
+        let filteredTasks = tasks.filter(t => t.id !== id);
         setTasks(filteredTasks);
     }
 
-    function addTask (title: string) {
+    function addTask(title: string) {
         let newTask = { id: v1(), title: title, isDone: false }
         setTasks([newTask, ...tasks])
     }
@@ -47,7 +47,6 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
-
             />
         </div>
     );
