@@ -27,9 +27,8 @@ export function Todolist(props: PropsType) {
             props.addTask(title.trim());
             setTitle("");
         } else {
-            setError('Error')
+            setError('Title is required')
         }
-
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -56,19 +55,16 @@ export function Todolist(props: PropsType) {
                    className={error ? 'error' : ''}
             />
             <button onClick={addTask}>+</button>
-            {error && <div className={'error-message'}>Field is required</div>}
+            {error && <div className={'error-message'}>{error}</div>}
         </div>
         <ul>
             {
                 props.tasks.map(t => {
 
                     const onClickHandler = () => props.removeTask(t.id)
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        props.changeTaskStatus(t.id, e.currentTarget.checked)
-                        console.log(`${t.id} ${e.currentTarget.checked}`)
-                    }
+                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {props.changeTaskStatus(t.id, e.currentTarget.checked)}
 
-                    return <li key={t.id} className={t.isDone === true ? 'is-done' : ''}>
+                    return <li key={t.id} className={t.isDone ? 'is-done' : ''}>
                         <input type="checkbox"
                                onChange={onChangeHandler}
                                checked={t.isDone}/>

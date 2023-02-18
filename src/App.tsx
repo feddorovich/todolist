@@ -27,7 +27,7 @@ function App() {
     }
 
     function changeStatus(taskId: string, isDone: boolean) {
-        let task = tasks.find( t => t.id === taskId )
+        let task = tasks.find( t => t.id === taskId)
         if (task) {
             task.isDone = isDone
         }
@@ -48,8 +48,6 @@ function App() {
     function changeFilter(value: FilterValuesType) {
         setFilter(value);
     }
-
-
 
     return (
         <div className="App">
