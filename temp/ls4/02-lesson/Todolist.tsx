@@ -13,7 +13,7 @@ type PropsType = {
     removeTask: (taskId: string) => void
     changeFilter: (value: FilterValuesType) => void
     addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    chengeTaskStatus: (taskId: string, isDone: boolean) => void
     filter: FilterValuesType
 }
 
@@ -27,7 +27,7 @@ export function Todolist(props: PropsType) {
             props.addTask(title.trim());
             setTitle("");
         } else {
-            setError('ERROR!!!')
+            setError('Error!!!')
         }
     }
 
@@ -55,7 +55,7 @@ export function Todolist(props: PropsType) {
                    className={error ? 'error' : ''}
             />
             <button onClick={addTask}>+</button>
-            {error && <div className={'error-message'}>ERROR</div>}
+            {error && <div className={'error-message'}>{error}</div>}
         </div>
         <ul>
             {
@@ -63,7 +63,7 @@ export function Todolist(props: PropsType) {
 
                     const onClickHandler = () => props.removeTask(t.id)
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                      props.changeTaskStatus(t.id, e.currentTarget.checked)
+                        props.chengeTaskStatus(t.id, e.currentTarget.checked)
                     }
 
                     return <li key={t.id} className={t.isDone ? 'is-done' : ''}>

@@ -26,7 +26,7 @@ function App() {
         setTasks(newTasks);
     }
 
-    function changeStatus(taskId: string, isDone: boolean) {
+    function chengeStatus(taskId: string, isDone: boolean) {
         let task = tasks.find(t => t.id === taskId)
         if (task) {
             task.isDone = isDone
@@ -58,7 +58,7 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
-                      changeTaskStatus={changeStatus}
+                      chengeTaskStatus={chengeStatus}
                       filter={filter}
             />
         </div>
