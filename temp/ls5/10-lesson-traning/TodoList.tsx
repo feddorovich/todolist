@@ -5,13 +5,15 @@ import {FilterValuesType} from "./App";
 type OnClickHandler = () => void
 
 type TodoListPropsType = {
+    todolistId: string
     title: string
     filter: FilterValuesType
     tasks: TaskType[]
-    changeFilterValue: (filter: FilterValuesType) => void
-    removeTask: (taskId: string) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    changeTodolistFilter: (filter: FilterValuesType, todolistId: string) => void
+    removeTask: (taskId: string, todolistId: string) => void
+    addTask: (title: string, todolistId: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
+    removeTodolist: (todolistId: string) => void
 }
 
 export type TaskType = {
@@ -41,7 +43,7 @@ const TodoList: FC<TodoListPropsType> = (props) => {
     const addTask = () => {
         const trimmedTitle = title.trim()
         if(trimmedTitle){
-            props.addTask(trimmedTitle)
+            props.addTask(trimmedTitle, props.todolistId)
         } else {
             setError(true)
         }
@@ -49,8 +51,10 @@ const TodoList: FC<TodoListPropsType> = (props) => {
     }
     const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>)=> e.key === "Enter" && addTask()
 
-    const handlerCreator = (filter: FilterValuesType):() => void => (): void => props.changeFilterValue(filter)
-
+    const handlerCreator = (filter: FilterValuesType):() => void => (): void => props.changeTodolistFilter(filter, props.todolistId)
+    const removeTodolistHandler = () => {
+      props.removeTodolist(props.todolistId)
+    }
 
     const inputErrorClasses = error || isUserMessageToLong ? "input-error" : ""
     const userMaxLengthMessage = isUserMessageToLong && <div style={{color: "hotpink"}}>Task title is to long!</div>
@@ -58,7 +62,7 @@ const TodoList: FC<TodoListPropsType> = (props) => {
     const isAddBtnDisabled = title.length === 0
     return (
         <div className={"todolist"}>
-            <h3>{props.title}</h3>
+            <h3>{props.title} <button onClick={removeTodolistHandler}>x</button></h3>
             <div>
                 {/*<input ref={addTaskInput}/>*/}
                 {/*<button onClick={addTask}>+</button>*/}
@@ -74,6 +78,7 @@ const TodoList: FC<TodoListPropsType> = (props) => {
                 {userErrorMessage}
             </div>
             <TasksList
+                todolistId={props.todolistId}
                 tasks={props.tasks}
                 removeTask={props.removeTask}
                 changeTaskStatus={props.changeTaskStatus}

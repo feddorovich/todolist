@@ -10,6 +10,7 @@ import {v1} from "uuid";
 export type FilterValuesType = "all" | "active" | "completed"
 
 function App (): JSX.Element {
+    console.log(typeof v1())
     //BLL:
     const todoListTitle: string = "What to learn"
     const [tasks, setTasks] = useState<Array<TaskType>>([
