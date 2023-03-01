@@ -7,13 +7,11 @@ type OnClickHandler = () => void
 type TodoListPropsType = {
     todolistId: string
     title: string
-    tasks: TaskType[]
     filter: FilterValuesType
-
+    tasks: TaskType[]
     changeTodolistFilter: (filter: FilterValuesType, todolistId: string) => void
     removeTask: (taskId: string, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
-
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     removeTodolist: (todolistId: string) => void
 }
@@ -53,10 +51,10 @@ const TodoList: FC<TodoListPropsType> = (props) => {
     }
     const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>)=> e.key === "Enter" && addTask()
 
-    const handlerCreator = (filter: FilterValuesType)=> {
-      return () => props.changeTodolistFilter(filter, props.todolistId)
+    const handlerCreator = (filter: FilterValuesType):() => void => (): void => props.changeTodolistFilter(filter, props.todolistId)
+    const RemoveTodolistHandler = () => {
+      props.removeTodolist(props.todolistId)
     }
-    const removeTodolistHandler = ()=>props.removeTodolist(props.todolistId)
 
     const inputErrorClasses = error || isUserMessageToLong ? "input-error" : ""
     const userMaxLengthMessage = isUserMessageToLong && <div style={{color: "hotpink"}}>Task title is to long!</div>
@@ -64,7 +62,7 @@ const TodoList: FC<TodoListPropsType> = (props) => {
     const isAddBtnDisabled = title.length === 0
     return (
         <div className={"todolist"}>
-            <h3>{props.title} <button onClick={removeTodolistHandler}>x</button></h3>
+            <h3>{props.title} <button onClick={RemoveTodolistHandler}>x</button></h3>
             <div>
                 {/*<input ref={addTaskInput}/>*/}
                 {/*<button onClick={addTask}>+</button>*/}
