@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import TodoList, {TaskType} from "./TodoList";
 import {v1} from "uuid";
-import AddItemForm from "./AddItemForm";
+
 
 // CRUD
 // R - filter, sort, search
@@ -74,28 +74,16 @@ function App (): JSX.Element {
         //
         setTasks({...tasks, [todoListId]: tasks[todoListId].map(t => t.id === taskId ? {...t, isDone: newIsDone}: t)})
     }
-    const changeTaskTitle = (taskId: string, newTitle: string, todoListId: string) => {
-        setTasks({...tasks, [todoListId]: tasks[todoListId].map(t => t.id === taskId ? {...t, title: newTitle}: t)})
-    }
 
+    const changeTodoListFilter = (filter: FilterValuesType, todoListId: string) => {
+        setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, filter: filter} : tl))
+    }
     const removeTodoList = (todoListId: string)=> {
         setTodoLists(todoLists.filter(tl => tl.id !== todoListId))  // 2 tl
         //delete tasks[todoListId]
         const copyTasks = {...tasks}
         delete copyTasks[todoListId]
         setTasks(copyTasks)
-    }
-    const addTodolist = (title: string) => {
-        const newTodolistId = v1()
-        let newTodolist:TodoListType = {id: newTodolistId, title: title, filter: "all"}
-        setTodoLists([...todoLists, newTodolist])
-        setTasks({...tasks, [newTodolistId]:[]})
-    }
-    const changeTodoListFilter = (filter: FilterValuesType, todoListId: string) => {
-        setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, filter: filter} : tl))
-    }
-    const changeTodolistTitle = (title: string, todoListId: string) => {
-        setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, title: title} : tl))
     }
 
     const getFilteredTasks = (tasks: Array<TaskType>, filter: FilterValuesType):  Array<TaskType> => {
@@ -108,6 +96,7 @@ function App (): JSX.Element {
                 return tasks
         }
     }
+
 
     const todoListsComponents = todoLists.map(tl => {
         const filteredTasks: Array<TaskType> = getFilteredTasks(tasks[tl.id], tl
@@ -123,18 +112,15 @@ function App (): JSX.Element {
                 removeTask={removeTask}
                 addTask={addTask}
                 changeTaskStatus={changeTaskStatus}
-                changeTaskTitle={changeTaskTitle}
 
                 changeTodoListFilter={changeTodoListFilter}
                 removeTodoList={removeTodoList}
-                changeTodolistTitle={changeTodolistTitle}
             />
         )
     })
     //UI:
     return (
         <div className="App">
-            <AddItemForm maxLengthUserMessage={15} addNewItem={addTodolist}/>
             {todoListsComponents}
         </div>
     );
