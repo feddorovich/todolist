@@ -1,8 +1,8 @@
 import React, {ChangeEvent, FC, RefObject, useRef, useState, KeyboardEvent} from 'react';
 import TasksList from "./TasksList";
 import {FilterValuesType} from "./App";
-import AddItemForm from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
+import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 type TodoListPropsType = {
     todoListId: string
@@ -17,7 +17,7 @@ type TodoListPropsType = {
 
     changeTodoListFilter: (filter: FilterValuesType, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
-    changeTodolistTitle: (title: string, todoListId: string) => void
+    changeTodolistTitle: (title: string,todoListId: string) => void
 }
 
 export type TaskType = {
@@ -26,23 +26,25 @@ export type TaskType = {
     isDone: boolean
 }
 
+
+
 const TodoList: FC<TodoListPropsType> = (props) => {
 
     const addTask = (title: string) => {
-            props.addTask(title, props.todoListId)
+        props.addTask(title, props.todoListId)
     }
     const handlerCreator = (filter: FilterValuesType) => () => props.changeTodoListFilter(filter, props.todoListId)
     const removeTodoList = () => props.removeTodoList(props.todoListId)
-    const changeTodolistTitle = (title: string) => {
-        props.changeTodolistTitle(title, props.todoListId)
+    const changeTodolistTitleHandler = (title: string) => {
+      props.changeTodolistTitle(title, props.todoListId)
     }
 
     return (
         <div className={"todolist"}>
-            <h3><EditableSpan title={props.title} changeTitle={changeTodolistTitle}/>
+            <h3><EditableSpan title={props.title} changeTitle={changeTodolistTitleHandler}/>
                 <button onClick={removeTodoList}>x</button>
             </h3>
-            <AddItemForm maxLengthUserMessage={15} addNewItem={addTask} />
+            <AddItemForm addNewItem={addTask}/>
             <TasksList
                 todoListId={props.todoListId}
                 tasks={props.tasks}
