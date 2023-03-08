@@ -1,8 +1,8 @@
 import React, {ChangeEvent, FC, RefObject, useRef, useState, KeyboardEvent} from 'react';
 import TasksList from "./TasksList";
 import {FilterValuesType} from "./App";
-import AddItemForm from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
+
+type OnClickHandler = () => void
 
 type TodoListPropsType = {
     todoListId: string
@@ -13,11 +13,9 @@ type TodoListPropsType = {
     removeTask: (taskId: string, todoListId: string) => void
     addTask: (title: string, todoListId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todoListId: string) => void
-    changeTaskTitle: (taskId: string, newTitle: string, todoListId: string) => void
 
     changeTodoListFilter: (filter: FilterValuesType, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
-    changeTodolistTitle: (title: string, todoListId: string) => void
 }
 
 export type TaskType = {
@@ -27,28 +25,66 @@ export type TaskType = {
 }
 
 const TodoList: FC<TodoListPropsType> = (props) => {
-
-    const addTask = (title: string) => {
-            props.addTask(title, props.todoListId)
+    const [title, setTitle] = useState<string>("")
+    const [error, setError] = useState<boolean>(false)
+    const maxLengthUserMessage: number = 15
+    const isUserMessageToLong: boolean = title.length > maxLengthUserMessage
+    // const addTaskInput: RefObject<HTMLInputElement> = useRef(null)
+    // console.log(addTaskInput)
+    // const addTask = () => {
+    //     if(addTaskInput.current){
+    //         props.addTask(addTaskInput.current.value)
+    //         addTaskInput.current.value = ""
+    //     }
+    //
+    // }
+    const changeLocalTitle = (e: ChangeEvent<HTMLInputElement>)=>{
+        error && setError(false)
+        setTitle(e.currentTarget.value)
     }
+    const addTask = () => {
+        const trimmedTitle = title.trim()
+        if(trimmedTitle){
+            props.addTask(trimmedTitle, props.todoListId)
+        } else {
+            setError(true)
+        }
+        setTitle("")
+    }
+    const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>)=> e.key === "Enter" && addTask()
+
     const handlerCreator = (filter: FilterValuesType) => () => props.changeTodoListFilter(filter, props.todoListId)
     const removeTodoList = () => props.removeTodoList(props.todoListId)
-    const changeTodolistTitle = (title: string) => {
-        props.changeTodolistTitle(title, props.todoListId)
-    }
 
+
+    const inputErrorClasses = error || isUserMessageToLong ? "input-error" : ""
+    const userMaxLengthMessage = isUserMessageToLong && <div style={{color: "hotpink"}}>Task title is to long!</div>
+    const userErrorMessage = error && <div style={{color: "hotpink"}}>Title is required!</div>
+    const isAddBtnDisabled = title.length === 0
     return (
         <div className={"todolist"}>
-            <h3><EditableSpan title={props.title} changeTitle={changeTodolistTitle}/>
+            <h3>{props.title}
                 <button onClick={removeTodoList}>x</button>
             </h3>
-            <AddItemForm maxLengthUserMessage={15} addNewItem={addTask} />
+            <div>
+                {/*<input ref={addTaskInput}/>*/}
+                {/*<button onClick={addTask}>+</button>*/}
+                <input
+                    value={title}
+                    placeholder="Please, enter title"
+                    onChange={changeLocalTitle}
+                    onKeyDown={onKeyDownAddTask}
+                    className={inputErrorClasses}
+                />
+                <button disabled={isAddBtnDisabled} onClick={addTask}>+</button>
+                {userMaxLengthMessage}
+                {userErrorMessage}
+            </div>
             <TasksList
                 todoListId={props.todoListId}
                 tasks={props.tasks}
                 removeTask={props.removeTask}
                 changeTaskStatus={props.changeTaskStatus}
-                changeTaskTitle={props.changeTaskTitle}
             />
             <div className="filter-btn-container">
                 <button
