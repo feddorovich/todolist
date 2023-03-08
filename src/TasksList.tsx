@@ -13,27 +13,31 @@ type TasksListPropsType = {
 const TasksList: FC<TasksListPropsType> = (props): JSX.Element => {
     const tasksItems: JSX.Element[] | JSX.Element =
         props.tasks.length
-        ? props.tasks.map((task) => {
-            const taskClasses = task.isDone ? "task task-done" : "task"
-            const removeTaskHandler = () => props.removeTask(task.id, props.todoListId)
-            const changeTaskStatusHandler =
-                (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked, props.todoListId)
-            const changeTaskTitleHandler = (title: string) => {
-              props.changeTaskTitle(task.id, title, props.todoListId)
-            }
-            return (
-                <li key={task.id}>
-                    <input
-                        type="checkbox"
-                        checked={task.isDone}
-                        onChange={changeTaskStatusHandler}
-                    />
-                    <EditableSpan title={task.title} spanClasses={taskClasses} changeTitle={changeTaskTitleHandler}/>
-                    <button onClick={removeTaskHandler}>x</button>
-                </li>
-            )
-        })
-        : <span>Your taskslist is empty</span>
+            ? props.tasks.map((task) => {
+                const taskClasses = task.isDone ? "task task-done" : "task"
+                const removeTaskHandler = () => props.removeTask(task.id, props.todoListId)
+                const changeTaskStatusHandler =
+                    (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked, props.todoListId)
+                const changeTaskTitleHandler = (title: string) => {
+                    props.changeTaskTitle(task.id, title, props.todoListId)
+                }
+                return (
+                    <li key={task.id}>
+                        <input
+                            type="checkbox"
+                            checked={task.isDone}
+                            onChange={changeTaskStatusHandler}
+                        />
+                        <EditableSpan
+                            title={task.title}
+                            spanClasses={taskClasses}
+                            changeTitle={changeTaskTitleHandler}
+                        />
+                        <button onClick={removeTaskHandler}>x</button>
+                    </li>
+                )
+            })
+            : <span>Your taskslist is empty</span>
     return (
         <ul>
             {tasksItems}

@@ -11,7 +11,8 @@ const EditableSpan: FC<EditableSpanPropsType> = (
     {
         title,
         changeTitle,
-        spanClasses
+        spanClasses,
+        inputClasses
     }) => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [localTitle, setLocaleTitle] = useState<string>(title)
@@ -34,11 +35,11 @@ const EditableSpan: FC<EditableSpanPropsType> = (
                 onChange={changeLocalTitle}
                 autoFocus
                 onBlur={offEditMode}
+                className={inputClasses}
             />
             : <span
                 className={spanClasses}
                 onClick={onEditMode}
-
             >{title}</span>
     );
 };
