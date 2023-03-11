@@ -1,0 +1,63 @@
+.App {
+    padding: 30px;
+    display: flex;
+}
+
+.App > div {
+    margin-right: 50px;
+}
+
+.todolist {
+    height: max-content;
+    border: 2px solid hotpink;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #f2f2f2;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
+}
+
+.task {
+    font-weight: bold;
+}
+
+.task-done {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.active-filter-btn {
+    background-color: hotpink;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 6px 11px;
+}
+
+.filter-btn {
+    background-color: cornflowerblue;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 6px 11px;
+}
+.filter-btn:hover {
+    background-color: rgba(100, 149, 237, 0.85);
+    border: none;
+}
+.active-filter-btn:hover {
+    background-color: rgba(255, 105, 180, 0.85);
+    border: none;
+}
+
+.filter-btn-container {
+    display: flex;
+    justify-content: space-between
+}
+
+.input-error {
+    border: 2px solid hotpink;
+    outline: none;
+}
+
