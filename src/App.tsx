@@ -163,7 +163,9 @@ function App(): JSX.Element {
     const newTheme = createTheme({
         palette: {
             mode: mode,
-            primary: lightGreen,
+            primary: {
+                main: '#338f8f'
+            },
             secondary: orange
         }
     })
@@ -199,7 +201,7 @@ function App(): JSX.Element {
                     </Toolbar>
                 </AppBar>
                 <Container fixed>
-                    <Grid container sx={{padding: '10px 0'}}>
+                    <Grid container sx={{padding: '15px 0'}}>
                         <AddItemForm maxLengthUserMessage={15} addNewItem={addTodoList}/>
                         {/*<Checkbox onChange={(e)=>{setDarkMode(e.currentTarget.checked)}}/>*/}
                     </Grid>
