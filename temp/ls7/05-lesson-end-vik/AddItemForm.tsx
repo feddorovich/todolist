@@ -1,4 +1,5 @@
 import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {IconButton, TextField} from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
@@ -37,11 +38,11 @@ const AddItemForm: FC<AddItemFormType> = ({
     const inputErrorClasses = error || isUserMessageToLong ? "input-error" : ""
     const onKeyDownHandler = isAddBtnDisabled ? undefined : onKeyDownAddItem
     const isInputShowError = isUserMessageToLong || error
-    const helperText = (error && 'Title is required!') || (isUserMessageToLong && 'Title is to long!')
+    const helperText = (error && "Title is required!") || (isUserMessageToLong && "Title is to long!")
     return (
         <div>
             <TextField
-                size={'small'}
+                size="small"
                 value={title}
                 placeholder="Please, enter title"
                 onChange={changeLocalTitle}
@@ -50,13 +51,14 @@ const AddItemForm: FC<AddItemFormType> = ({
                 error={isInputShowError}
                 helperText={helperText}
             />
-            <IconButton size={'small'}
-                        onClick={addItem}
-                        disabled={isAddBtnDisabled}
-                        color={'primary'}
-            >
 
-                <AddCircleOutlineIcon/>
+            <IconButton
+                size={"small"}
+                onClick={addItem}
+                disabled={isAddBtnDisabled}
+                color={"primary"}
+            >
+                <AddCircleOutlineIcon />
             </IconButton>
             {/*{userMaxLengthMessage}*/}
             {/*{userErrorMessage}*/}

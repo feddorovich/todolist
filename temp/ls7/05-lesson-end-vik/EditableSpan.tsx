@@ -27,7 +27,8 @@ const EditableSpan: FC<EditableSpanPropsType> = (
 
     return (
         editMode
-            ? <TextField variant={'standard'}
+            ? <TextField
+                variant="standard"
                 value={localTitle}
                 onChange={changeLocalTitle}
                 autoFocus

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {ChangeEvent, FC, RefObject, useRef, useState, KeyboardEvent} from 'react';
 import TasksList from "./TasksList";
 import {FilterValuesType} from "./App";
 import AddItemForm from "./AddItemForm";
@@ -39,19 +39,22 @@ const TodoList: FC<TodoListPropsType> = (props) => {
 
     return (
         <div className={"todolist"}>
-            <Typography variant={'h5'}
-                        align={'center'}
-                        fontWeight={'bold'}
-                        gutterBottom
+            <Typography
+                variant="h5"
+                align="center"
+                fontWeight="bold"
+                gutterBottom
             >
-                <EditableSpan title={props.title} changeTitle={changeTodoListTitle}/>
-                <IconButton size={'small'}
-                            onClick={removeTodoList}
-                color={'secondary'}>
-                    <HighlightOffIcon/>
+                <EditableSpan title={props.title} changeTitle={changeTodoListTitle} />
+                <IconButton
+                    size={"small"}
+                    onClick={removeTodoList}
+                    color={"secondary"}
+                >
+                    <HighlightOffIcon />
                 </IconButton>
             </Typography>
-            <AddItemForm maxLengthUserMessage={15} addNewItem={addTask}/>
+            <AddItemForm maxLengthUserMessage={15} addNewItem={addTask} />
             <TasksList
                 todoListId={props.todoListId}
                 tasks={props.tasks}
@@ -61,24 +64,24 @@ const TodoList: FC<TodoListPropsType> = (props) => {
             />
             <div className="filter-btn-container">
                 <Button
-                    size={'small'}
-                    variant={'contained'}
+                    size="small"
+                    variant="contained"
                     disableElevation
-                    color={props.filter === "all" ? "secondary" : "primary"}
+                    color={props.filter ==="all" ? "secondary" : "primary"}
                     onClick={handlerCreator('all')}
                 >All</Button>
                 <Button
-                    size={'small'}
-                    variant={'contained'}
+                    size="small"
+                    variant="contained"
                     disableElevation
-                    color={props.filter === "active" ? "secondary" : "primary"}
+                    color={props.filter ==="active" ? "secondary" : "primary"}
                     onClick={handlerCreator("active")}
                 >Active</Button>
                 <Button
-                    size={'small'}
-                    variant={'contained'}
+                    size="small"
+                    variant="contained"
                     disableElevation
-                    color={props.filter === "completed" ? "secondary" : "primary"}
+                    color={props.filter ==="completed" ? "secondary" : "primary"}
                     onClick={handlerCreator("completed")}
                 >Completed</Button>
             </div>
